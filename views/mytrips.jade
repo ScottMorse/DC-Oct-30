@@ -1,0 +1,51 @@
+doctype html
+html
+  head
+    title My Trips
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    link(rel='stylesheet', href='/stylesheets/global.css')
+    link(rel='stylesheet', href='/stylesheets/mytrips.css')
+  body
+    div#page-wrap
+      form#logout-form(method='post' action='/logout') #[input#logout-button(type="submit" value="Logout")]
+      h1 My Trips (#[span=username])
+      div#trip-form-wrap
+        h2 New Trip:
+        form#add-trip-form(method='post' action='/mytrips/addTrip' autocomplete='off')
+          div#trip-form-subwrap
+            div.option-wrap
+              div.input-title Location
+              input(type="text" name="tripName" maxlength=30 required)
+            div.option-wrap
+              div.input-title Details
+              input(type="text" name="tripDetails" placeholder="Optional" maxlength=255)
+            div.option-wrap
+              div.input-title Departure date
+              input(type="date" name="tripDeparture" maxlength=255 required)
+            div.option-wrap
+              div.input-title Return date
+              input(type="date" name="tripReturn" maxlength=255)
+          input#add-button(type="submit" value="Add trip")
+
+      div#trips
+        //- each val in trips
+        //-   div.trip-wrap(class=val.completed ? 'completed':'' class=val.priority)
+        //-     div.trip-subwrap
+        //-       div.trip-name-wrap
+        //-         div.high-priority
+        //-         div.trip-title=val.tripname
+        //-         div.trip-details=val.tripdetails
+        //-     div.trip-subwrap.date-wrap
+        //-       div Created:
+        //-       div.date-created=val.datecreated
+        //-       div=val.datecompleted ? 'Completed:':''
+        //-       div.date-completed=val.datecompleted
+        //-     div.trip-subwrap.trip-buttons
+        //-       form.complete-trip-form(method="post" action='/dashboard/comtrip') 
+        //-         input.tripId(type="text" value=val.ID name="tripID")
+        //-         input.trip-control(type="submit" value="Complete")
+        //-       form.remove-trip-form(method="post" action='/dashboard/remtrip') 
+        //-         input.tripId(type="text" value=val.ID name="tripID")
+        //-         input.trip-control(type="submit" value="X Remove")
+        //- h2#completed-title
+  script(src="/scripts/myTripsStatic.js")
