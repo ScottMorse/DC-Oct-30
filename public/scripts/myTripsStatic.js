@@ -1,39 +1,24 @@
 // const tripLocation = document.getElementById('location')
 
-const mapPlaceURL = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?type=(cities)&key=AIzaSyBXLCcENFupNH9DkxvC7z43zqkjdp4QcLc&inputtype=textquery&fields=photos&input='
-const replacer = new RegExp(/[\s\W]/,'g')
+
+// const replacer = new RegExp(/[\s\W]/,'g')
 
 const tripImgs = Array.from(document.querySelectorAll('.trip-img'))
 const tripLocations = Array.from(document.querySelectorAll('.location'))
 
-for(let i=0;i<tripImgs.length;i++){
-    fetch(mapPlaceURL + tripLocations[i].innerHTML.replace(replacer,'+'))
-        .then(response => {
-            return response.json()
-        })
-        .then(placeData => {
-            const ref = placeData.candidates[0].photos[0].photo_reference
-            fetch('https://maps.googleapis.com/maps/api/place/photo?maxheight=500&key=AIzaSyBXLCcENFupNH9DkxvC7z43zqkjdp4QcLc&photoreference=' + ref)
-                .then(image => {
-                    tripImgs[i].style.backgroundImage = 'url("' + image.url + '")'
-                }) 
-        })
-}
-
-// console.log(tripLocation.innerHTML)
-
-// fetch(mapPlaceURL + tripLocation.innerHTML.replace(replacer,'+'))
-//   .then(response => {
-//       return response.json()
-//   })
-//   .then(placeData => {
-//         console.log(placeData)
-//       const ref = placeData.candidates[0].photos[0].photo_reference
-//       fetch('https://maps.googleapis.com/maps/api/place/photo?maxheight=500&key=AIzaSyBXLCcENFupNH9DkxvC7z43zqkjdp4QcLc&photoreference=' + ref)
-//         .then(image => {
-//             document.getElementById('image').src = image.url
-//         }) 
-//   })
+// for(let i=0;i<tripImgs.length;i++){
+//     fetch(mapPlaceURL + tripLocations[i].innerHTML.replace(replacer,'+'))
+//         .then(response => {
+//             return response.json()
+//         })
+//         .then(placeData => {
+//             const ref = placeData.candidates[0].photos[0].photo_reference
+//             fetch('https://maps.googleapis.com/maps/api/place/photo?maxheight=500&key=AIzaSyBXLCcENFupNH9DkxvC7z43zqkjdp4QcLc&photoreference=' + ref)
+//                 .then(image => {
+//                     tripImgs[i].style.backgroundImage = 'url("' + image.url + '")'
+//                 }) 
+//         })
+// }
 
 const addTripForm = document.getElementById('add-trip-form')
 
