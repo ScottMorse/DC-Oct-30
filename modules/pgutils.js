@@ -1,9 +1,9 @@
 const config = {
-    'host': 'localhost',
+    'host': 'ec2-54-204-14-96.compute-1.amazonaws.com',
     'port': 5432,
-    'user': 'postgres',
-    'password': '',
-    'database': 'expresstrips'
+    'user': 'udxswtdsmllwfh',
+    'password': '8e2d2a7ee68f2f2db2600cc1174cae1ada1158d2e59a4120949f8f88e9e8501c',
+    'database': 'df9mqpg99d4ouc'
 }
 
 const pg = require('pg-promise')()
