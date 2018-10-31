@@ -23,10 +23,9 @@ function checkCookie(req){
 router.get('/',(req,res,next)=>{
     const [uid,username] = checkCookie(req)
     if(!uid){
-      res.redirect('../',{username:username,uid:uid}) 
+      res.redirect('../') 
       return
     }
-
     let trips
 
     db.filterData('trips',['*'],['uid'],uid)
