@@ -88,6 +88,12 @@ h2{
     width: 100vw;
 }
 
+#err{
+    color: red;
+    position: absolute;
+    white-space: nowrap;
+}
+
 .trip{
     width: inherit;
     display: flex;
