@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css?family=Bungee+Shade');
+
+h1{
+    font-family: 'Bungee Shade';
+    position: absolute;
+    color: lightgrey;
+    margin-top: 30px;
+    width: 100vw;
+    text-align: center;
+    z-index: 1;
+    }
+    
+
+html{
+    line-height: 1;
+  }
+  
+body {
+font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+display: flex;
+flex-direction: column;
+align-items: center;
+margin: 0;
+}
+
+#headerimg{
+background-image: url('../images/cityscape.png');
+background-size: 400px 168px;
+height: 268px;
+background-repeat: repeat-x;
+background-position: top;
+width: 100vw;
+z-index: -2;
+filter: grayscale(100%);
+transform: rotate(180deg);
+border: none;
+}
+
+#topbar{
+background-color: #202020;
+position: absolute;
+width: 100vw;
+height: 100px;
+}
+
+
+.submit{
+    -webkit-appearance: none;
+    background: linear-gradient(100deg,whitesmoke,rgb(230, 231, 231));
+    margin: 10px;
+    font-family: inherit;
+    padding: 5px;
+  }
+  .submit:hover{
+    cursor: pointer;
+  }

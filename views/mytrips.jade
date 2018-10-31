@@ -1,33 +1,53 @@
 doctype html
 html
   head
-    title My Trips
+    title WUD My Trips
     meta(name="viewport" content="width=device-width, initial-scale=1")
     link(rel='stylesheet', href='/stylesheets/global.css')
     link(rel='stylesheet', href='/stylesheets/mytrips.css')
   body
     div#page-wrap
-      form#logout-form(method='post' action='/logout') #[input#logout-button(type="submit" value="Logout")]
-      h1 My Trips (#[span=username])
+      div#topbar
+      div#account-head
+        div#username=username
+        form#logout-form(method='post' action='/logout') #[input#logout-button(type="submit" value="Logout")]
+      h1 My Trips
+      div#headerimg
       div#trip-form-wrap
-        h2 New Trip:
         form#add-trip-form(method='post' action='/mytrips/addTrip' autocomplete='off')
+          h2#new-trip New Trip:
+          input#add-button(type="submit" value="Add trip")
           div#trip-form-subwrap
             div.option-wrap
               div.input-title Location
-              input(type="text" name="tripName" maxlength=30 required)
+              input(type="text" name="tripLocation" maxlength=50 required)
             div.option-wrap
               div.input-title Details
               input(type="text" name="tripDetails" placeholder="Optional" maxlength=255)
             div.option-wrap
               div.input-title Departure date
-              input(type="date" name="tripDeparture" maxlength=255 required)
+              input#datestart(type="date" name="tripDeparture" required)
             div.option-wrap
+              div#err
               div.input-title Return date
-              input(type="date" name="tripReturn" maxlength=255)
-          input#add-button(type="submit" value="Add trip")
+              input#dateend(type="date" name="tripReturn" required)
 
       div#trips
+        each trip in trips
+          div.trip
+            div.trip-img
+            h3.location=trip.location
+            div.dates
+              div.date
+                h3 Leaving:
+                div=trip.datestart
+              div.date
+                h3 Returning:
+                div=trip.dateend
+            div.details=trip.details
+            form.trip-delete-form(method="post" action="/mytrips/delTrip")
+                input.trip-id(type="text" value=trip.id name="tripId")
+                input.submit.trip-delete-button(type="submit" value="X Delete")
         //- each val in trips
         //-   div.trip-wrap(class=val.completed ? 'completed':'' class=val.priority)
         //-     div.trip-subwrap

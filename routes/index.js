@@ -109,6 +109,16 @@ router.post('/login',(req,res,next) => {
   })
 })
 
+router.post('/logout',(req,res,next) => {
+    res.clearCookie(cookieName)
+    res.redirect('../')
+})
+
+router.get('/logout',(req,res,next) => {
+  res.clearCookie(cookieName)
+  res.redirect('../')
+})
+
 router.get('/register',(req,res,next) => {
   res.redirect('/')
 })

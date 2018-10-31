@@ -26,7 +26,7 @@ function checkDefaultTables(){
     })
     .catch(err => 
         createTable('users', [
-            'ID SERIAL PRIMARY KEY',
+            'id SERIAL PRIMARY KEY',
             'username VARCHAR(20) NOT NULL',
             'email VARCHAR(255) NOT NULL',
             'pswd VARCHAR(255) NOT NULL'
@@ -113,7 +113,22 @@ function filterData(tbName,colArr,filColArr,filArr){
             }
         }
     }
-    console.log(comm)
+    return db.any(comm + ';')
+}
+
+function deleteData(tbName,filColArr,filArr){
+    let comm = 'DELETE FROM ' + tbName + ' WHERE'
+    if(filColArr.length == 1){
+        comm += ' ' + filColArr[0] + ' = ' + filArr[0]
+    }
+    else{
+        for(let i = 0;i < filArr.length;i++){
+            comm += ' ' + filColArr[i] + ' = ' + filArr[i]
+            if(i < filArr.length - 1){
+                comm += ' AND '
+            }
+        }
+    }
     return db.any(comm + ';')
 }
 
@@ -129,3 +144,9 @@ exports.insertNewData = (tbName,colArr,valArr) => insertNewData(tbName,colArr,va
 exports.updateData = (tbName,colArr,valArr,filColArr,filArr) => updateData(tbName,colArr,valArr,filColArr,filArr)
 exports.selectTableAll = (tbName) => selectTableAll(tbName)
 exports.filterData = (tbName,colArr,filColArr,filArr) => filterData(tbName,colArr,filColArr,filArr)
+exports.deleteData = (tbName,filColArr,filArr) => deleteData(tbName,filColArr,filArr)
+
+exports.one = (query) => db.one(query)
+exports.any = (query) => db.any(query)
+exports.none = (query) => db.none(query)
+exports.oneOrNone = (query) => db.oneOrNone(query)

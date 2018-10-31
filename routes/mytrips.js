@@ -10,19 +10,73 @@ const cookieName = 'EXPRESSTRIPSUSER'
 
 let username
 let uid
-router.get('/',(req,res,next)=>{
-    const userCookie = req.cookies[cookieName].split('::')
+
+function checkCookie(req){
+    const userCookie = req.cookies[cookieName]
     if(userCookie)
     {
-      uid = userCookie[0]
-      username = userCookie[1]
+      return userCookie.split('::')
     }
-    else
-    {
-      res.redirect('../')
+    return [null,null]
+}
+
+router.get('/',(req,res,next)=>{
+    const [uid,username] = checkCookie(req)
+    if(!uid){
+      res.redirect('../../',{username:username,uid:uid}) 
+      return
     }
-    res.render('mytrips',{username:username,uid:uid})
+
+    let trips
+
+    db.filterData('trips',['*'],['uid'],uid)
+      .then(tripRows =>{
+        trips = tripRows.map(row=>{
+          row.datestart = row.datestart.toDateString()
+          row.dateend = row.dateend.toDateString()
+          return row
+        })
+        res.render('mytrips',{username:username,uid:uid,trips:trips})
+      })
+      .catch(err=>console.log(err))
 })
+
+router.post('/addTrip',(req,res,next)=> {
+  const [uid,username] = checkCookie(req)
+  if(!uid){
+    res.redirect('../../',{username:username,uid:uid}) 
+    return
+  }
+   const bod = req.body
+   const tripLocation = bod.tripLocation
+   const tripDetails = bod.tripDetails
+   const tripDeparture = bod.tripDeparture
+   const tripReturn = bod.tripReturn
+   let data = [uid,tripLocation,tripDeparture,tripReturn].map(db.wrap)
+   let dataCol = ['uid','location','datestart','dateend']
+   if(tripDetails){
+     data.push(db.wrap(tripDetails))
+     dataCol.push('details')
+   }
+
+   db.insertNewData('trips',dataCol,data).then(res => console.log(res)).catch(err=>console.log(err))
+
+   res.redirect('/')
+})
+
+router.post('/delTrip',(req,res,next)=>{
+  const [uid,username] = checkCookie(req)
+  if(!uid){
+    res.redirect('../../',{username:username,uid:uid}) 
+    return
+  }
+  db.deleteData('trips',['id'],[req.body.tripId])
+    .then(after => res.redirect('../'))
+    .catch(err => {console.log(err);res.redirect('../')})
+})
+
+router.get('/addTrip',(req,res,next)=> res.redirect('../'))
+router.get('/delTrip',(req,res,next)=> res.redirect('../'))
 
 
 
